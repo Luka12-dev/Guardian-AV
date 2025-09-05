@@ -25,7 +25,6 @@ except Exception as e:
     print("PyQt6 is required: pip install PyQt6")
     raise
 
-# --------------------- Logging ---------------------
 LOG_DIR = Path.home() / ".guardianav" / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 LOG_FILE = LOG_DIR / "guardianav.log"
@@ -36,9 +35,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger("guardianav")
 
-# ----------------- Simple Signature DB --------------
-# Minimal set including the EICAR test pattern hash.
-# You can extend this list with SHA256 hashes of known test samples.
 KNOWN_BAD_SHA256 = {
     # EICAR (plain ASCII) SHA256
     "275a021bbfb6480f2c343b2b3a9e0b0b0abf3fca0cf2741d9a5a5c1f3c6f0d7a",
@@ -80,14 +76,12 @@ def file_entropy(path: Path, sample_size: int = 1024 * 128) -> float:
     except Exception:
         return 0.0
 
-
 @dataclass
 class Detection:
     path: Path
     reason: str
     sha256: str
     size: int
-
 
 # Scanner Worker
 class ScanWorker(QThread):
